@@ -1,10 +1,13 @@
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
-public class Opgave12 {
+public class lort {
     public static void main(String[] args) {
+
+
+        /* Write a method contains3 that accepts a list of strings as a parameter
+        and returns true if any single string occurs
+at least 3 times in the list, and false otherwise. Use a map as auxiliary storage. */
+
         List<String> list = new LinkedList<>();
 
         list.add("hej");
@@ -20,30 +23,69 @@ public class Opgave12 {
 
     public static boolean contains3(List<String> a)
     {
-        Map<String, Integer> countMap = new TreeMap<>();
+        Map<Integer, String> countMap = new TreeMap<>();
         int count = 0;
+        int countHigh = 0;
         int contains3Strings = 3;
 
-        for (int i = 0; i < a.size(); i++)
-        {
+        for (int i = 0; i < a.size() ; i++) {
             String string = a.get(i);
-            if(!countMap.containsKey(string)) //hvis map ikke indeholder
-             {
-                 countMap.put(string,1); // adds the word if it's the first occurence
-             }else{
-                    // if seen before adds 1 to count
-                    countMap.put(string,i+1);
-                    count++;
+            if(!countMap.containsValue(a.get(i))) {
+                countMap.put(i, string);
             }
-         }
+        }
 
-         if (count==contains3Strings) // hvis count er = 3
-         {
-             System.out.println("True");
-             return true;
-         }
+        int i = 0;
+        int j = 0;
+
+        while(j < a.size())
+        {
+            if(countMap.containsValue(a.get(i))){
+
+
+                for (int k = 0; k < a.size() ;) {
+                    if(a.get(k) == countMap.get(i))
+                    {count++;
+                     a.remove(a.get(k));
+                     k = 0;
+                    }else{
+                        k++;
+                        if(count >= countHigh){
+                        countHigh = count;}
+
+                    }
+
+                }
+                count = 0;
+            }if(!a.contains(countMap.get(i)))
+        {
+            j++;
+            i++;
+
+
+
+        }
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+        if (countHigh>=contains3Strings) // hvis count er = 3
+        {
+            System.out.println("True");
+            return true;
+        }
         System.out.println("False");
-         return false;
+        return false;
 
     }
 }
